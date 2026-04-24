@@ -1,0 +1,23 @@
+services:
+  redis:
+    image: redis:alpine
+    container_name: dlss_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dlss_network
+
+  storage_node:
+    image: alpine
+    container_name: dlss_storage
+    volumes:
+      - dlss_data:/data
+    command: tail -f /dev/null
+    networks:
+      - dlss_network
+networks:
+  dlss_network:
+    driver: bridge
+
+volumes:
+  dlss_data:
